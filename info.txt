@@ -1,0 +1,47 @@
+Sustainable Agriculture Tracker
+
+SDG 2 - Zero Hunger
+SDG 6 - Clean Water
+SDG 15 - Life on Land
+
+Real-World Issue
+- tracks the progress and status of the farm
+- accessible tools to optimize crop yield while minimizing use of resources 
+- maintaining a healthy crop environment
+
+Tracker
+- farm profiles with basic encryption
+- view, edit, delete planting records
+- sort records by yield or crop name
+- search by crop type
+    - food crops
+    - feed crops
+- help farmers input:   
+    - crops types
+    - water requirements and water quality
+    - expected yield of optimal planting schedules
+- calculates average water use and yield per crop
+- tracks irrigation and resource usage
+- weather & climate information
+- tracking stock resources & inventory
+    - fertilizer
+    - seeds, etc
+- recommends Sustainable methods and farming practices (based on environmental data)
+
+- export logs via File I/O 
+- test data simulation for validation
+- text-based UI
+- STRUCTS: crops, fields, irrigation data
+    - must consist char[], int, float
+- 2D ARRAYS: store water usage and yield status
+- File handling: logs and encrypted user credentials
+- basic encyption: caesar ciper or XOR
+- Pass-by-reference for memory efficient manipulation
+
+
+LINKS:
+https://dergipark.org.tr/en/download/article-file/1886248
+
+https://ipad.fas.usda.gov/countrysummary/Default.aspx?id=RP
+
+https://www.scribd.com/document/651501013/Crops-Statistics-of-the-Philippines-2017-2021
