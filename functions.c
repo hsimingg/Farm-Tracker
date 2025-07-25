@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
-#include <conio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "defs.h"
 
 //! FARMER PROFILES
+
+/*
 
 /*
 with password encryption
@@ -16,8 +18,7 @@ int addFarmerProfile()
 }
 
 /*
-decrypt and validate
-*/
+decrypt and validate */
 int farmerLogin()
 {
 	//return struct pointer for validation
@@ -197,6 +198,21 @@ void runTestDataSimulation()
 
 }
 
+void getValidateMenu(int *variable, int min, int max)
+{
+	do
+		{
+			printf("Enter: ");
+			scanf("%d", variable);
+
+			if (*variable < min || *variable > max)
+			{
+				printf("Try Again. Only Enter %d-%d.\n", min, max);
+			}
+
+		} while(*variable < min || *variable > max);
+}
+
 
 // ? OPTIONAL
 
@@ -238,4 +254,6 @@ void deleteInventoryItem()
 
 }
 
+*/
 
+*/

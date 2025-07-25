@@ -1,25 +1,35 @@
-#DEFINE MAX_USER 10
-#DEFINE MAX_CROP 100
+#define MAX_USER 10
+#define MAX_CROP 100
+#define MAX_LENGTH 51 // max num if chars for each string
 
-typedef char String50[51];
+typedef char String50[MAX_LENGTH];
 
 
-struct cropData{
-	int nCrops;
-	String50 crop_type;
-	String50 soil_type;
-	float estYield;
-};
+typedef struct {
+	int crops;
+	String50 cropType;
+	String50 soilType;
+	String50 plantingDate;
+	float waterReq; //mm
+	float estYield; //tons
+} CropRecord;
  
-struct farmer{
-	int ID;
+typedef struct {
+	int idNum;
+	String50 username;
 	String50 fName;
 	String50 lName;
 	String50 password;
-};
+} Farmer;
+
+typedef struct {
+	String50 item;
+	int quantity;
+} Inventory;
 
 
 //function prototypes
+
 int addFarmerProfile();
 int farmerLogin();
 void forgotPassword();
@@ -46,6 +56,7 @@ void exportReporttoFile();
 void encryptPassword();
 void decryptPassword();
 void runTestDataSimulation();
+void getValidateMenu(int *variable, int min, int max);
 void updateCropRecord();
 void recommendPractices();
 void track_ResourceUsage();
@@ -53,5 +64,3 @@ void addInventoryItem();
 void updateInventoryItem();
 void displayInventory();
 void deleteInventoryItem();
-
-
