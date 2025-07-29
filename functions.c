@@ -8,9 +8,11 @@
 //! FARMER PROFILES
 
 /*
+	This function adds a farmer profile by accepting inputs from the user
+	and stores them in a data structure 
 
-/*
-with password encryption
+	@param *user: pointer to the address of the structure userList
+	@param *size: pointer to the address of userCount
 */
 void addFarmerProfile(Farmer *user, int *size)
 {
@@ -33,8 +35,18 @@ void addFarmerProfile(Farmer *user, int *size)
 
     (*size)++;
 }
+
+
 /*
-decrypt and validate */
+    This function logs in a farmer using either username or ID number
+    with a matching password. On success, it copies the record to currentUser
+    and returns its index; otherwise, returns -1.
+
+    @param  *user       : pointer to the address of the structure userList
+    @param  *size       : pointer to the address of userCount
+    @param  *currentUser: pointer where the logged-in user data will be copied
+    @return index of the logged-in user, or -1 if not found
+*/
 int farmerLogin(Farmer *user, int *size, Farmer *currentUser)
 {
     String50 inputUser;
@@ -59,8 +71,13 @@ int farmerLogin(Farmer *user, int *size, Farmer *currentUser)
     return index;
 }
 
+
 /*
-reset + encrypt
+    This function resets a farmer's password after verifying
+    username + first name + last name.
+
+    @param *user: pointer to the address of the structure userList
+    @param *size: pointer to the address of userCount
 */
 void forgotPassword(Farmer *user)
 {
@@ -103,6 +120,15 @@ void forgotPassword(Farmer *user)
     
 }
 
+
+/*
+    This function deletes a farmer profile based on a 1-based index
+    provided by the user.
+
+    @param *user: pointer to the address of the structure userList
+    @param *size: pointer to the address of userCount
+    @return 1 if deleted, 2 if list empty, 0 if invalid index
+*/
 int deleteFarmerProfile(Farmer *user, int *size)
 {
     int index, i;
@@ -143,6 +169,17 @@ int deleteFarmerProfile(Farmer *user, int *size)
 	return flag;
 }
 
+
+/*
+    This function loads farmer data from a text file named "<fileBase>.txt".
+    Each farmer entry is expected to contain 5 tokens per line:
+    idNum fName lName password username
+
+    @param *user    : pointer to the address of the structure userList
+    @param *size    : pointer to the address of userCount (updated on success)
+    @param  *fileBase: base file name without extension
+    @return 1 on success, 0 on failure
+*/
 int loadFarmerData(Farmer *user, int *size)
 {
     
@@ -221,6 +258,14 @@ int loadFarmerData(Farmer *user, int *size)
 
 }
 
+
+/*
+	This function displays the profile of the current user.
+
+ 	@param *user    : pointer to the address of the structure userList
+   	@param *size    : pointer to the address of userCount (updated on success)
+    	@param  *currentUser: pointer to the address of the currentUser 
+*/
 void displayFarmerProfile(Farmer *user, int *size, Farmer *currentUser)
 {
 	
@@ -240,10 +285,6 @@ void displayFarmerProfile(Farmer *user, int *size, Farmer *currentUser)
 	}
 }
 
-/*
-	This function loads cropdata and farmerdata from a .txt file into their proper structures.
-
-*/
 
 //! PLANTING RECORDS
 
@@ -328,6 +369,8 @@ void displayCropRecord(cropRecord *crop, int *size)
     }
 
 }
+
+
 /*
     This function deletes a crop record by index (1-based).
 
@@ -386,10 +429,7 @@ int deleteCropRecord(cropRecord *crop, int *size)
     
 }
 
-/*
-must use sort algorithm + w recursion
-sort records by yield or crop name
-*/
+
 /*
     This function sorts crop records either by name (ascending)
     or by estimated yield (descending).
@@ -582,10 +622,10 @@ int loadCropData(crop_Preloaded *pre, int *size)
 
 
 /*
-	This function displays all preloaded data
+	This function displays all preloaded crop data.
 
  	@param *crop: pointer to the address of the array of crop_Preloaded
-
+	@param *size: pointer to the address of the preloaded cropCount
 */  
 void displayPreLoad(crop_Preload *pre, int *size)
 {
