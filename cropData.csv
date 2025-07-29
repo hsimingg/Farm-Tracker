@@ -1,0 +1,21 @@
+cropName,soilType,avgYield,minReqWater,maxReqWater,fertilizerReq,plantingMonths
+Palay,Flooded Clay/Loam,4.14,1200,1500,270.5,June-July or Nov-Dec
+Corn,Well-drained Sandy,3.28,500,800,290.04,Feb-March or June
+Banana,Moisted Deep Loam,19.98,1200,2200,200,Rainy Season
+Mango,Sandy Loam,4.07,900,1200,120,June-July
+Pineapple,Well-drained Sandy,42.86,800,1200,400,April-June
+Calamansi,Well-drained Loam,5.53,900,1200,150,July-Sept
+Eggplant,Sandy Loam,11.11,600,750,100,Oct-Dec
+Tomato,Fertiled Sandy Loam,14.26,400,600,150,Nov-Feb
+Cassava,Sandy Loam,11.24,500,700,70,May-July
+Camote,Well-drained Loam,6.32,600,700,50,June-July or Nov-Dec
+Gabi,Wetland Loam,6.99,1200,1500,60,March-April
+Mongo,Sandy Loam,0.88,410,30,Oct-Nov
+Peanut,Sandy to Clay Loam,1.25,500,600,40,May-June or Oct
+Ubi,Well-drained Loam,5.36,600,900,60,March-May
+Onion,Sandy Loam,11.67,350,550,100,Nov-Jan
+Garlic,Sandy Clay Loam,2.42,300,450,90,Oct-Jan
+Squash,Sandy Loam,14.77,500,600,60,May-July
+Ampalaya,Sandy Loam,8.47,600,800,50,June or Oct
+Papaya,Sandy Loam,20.45,1200,1600,100,June-Aug
+Coconut,Well-drained Sandy,4.03,1500,2500,80,Year-Round

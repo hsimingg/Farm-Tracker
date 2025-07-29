@@ -14,7 +14,7 @@ with password encryption
 */
 void addFarmerProfile(Farmer *user, int *size)
 {
-    if (*size >= MAX_USER)
+    if (*size >= MAX_USER) 
     {
         printf("No more users available\n");
         return;
@@ -498,16 +498,16 @@ void runTestDataSimulation()
 
 }
 
-void getValidateMenu(int *variable, int min, int max)
+void getValidateMenu(char *variable, char min, char max)
 {
 	do
 		{
 			printf("Enter: ");
-			scanf("%d", variable);
+			scanf(" %c", variable);
 
 			if (*variable < min || *variable > max)
 			{
-				printf("Try Again. Only Enter %d-%d.\n", min, max);
+				printf("Try Again. Only Enter %c-%c.\n", min, max);
 			}
 
 		} while(*variable < min || *variable > max);

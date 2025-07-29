@@ -6,19 +6,22 @@
 #define MAX_LENGTH 51
 
 typedef char String50[MAX_LENGTH];
+//expectedYield = crop.avgYield * waterFactor * area;
 
 // Structure for storing crop records
 typedef struct cropDataTag {
-    String50 cropType;
+    String50 cropName;
     String50 soilType;
-    String50 plantingDate;
-    float waterReq;
-    float estYield;
+    float avgYield;
+    float minReqWater;
+    float maxReqWater;
+    float fertilizerReq;
+    String50 plantingMonths;
 } CropRecord;
 
 // Structure for storing farmer profiles
 typedef struct farmerInfoTag {
-    int idNum;
+    int idNum; 
     String50 fName;
     String50 lName;
     String50 password;
