@@ -10,30 +10,32 @@ typedef char String50[MAX_LENGTH];
 //expectedYield = crop.avgYield * waterFactor * area;
 
 // Structures for storing crop related data
-typedef struct {
+typedef struct cropUserData {
     //use -1.0 if N/A
     String50 cropName;
-    float areaused;
+    float areaUsed;
     String50 plantedMonth;
-    float plantedDay;
-    float plantedYear;
+    int plantedDay;
+    int plantedYear;
     float waterUsed;    //m^3
     float fertilizerUsed; //kg
     String50 soilUsed;
-    String50 harvestDate;
+    String50 harvestMonth;
+    int harvestDay;
+    int harvestYear;
     float yieldUsed;    //tons
-} cropRecord;
+} CropRecord;
 
-typedef struct {
+typedef struct cropPreData {
     String50 cropName;
     String50 soilRecommend;
     String50 monthsRecommend;
     float minWaterRecommend;
     float maxWaterRecommend;
     float fertilizerRecommend;
-    float expectedDuration;
+    int expectedDuration;
     float expectedYield;
-} crop_Preloaded;
+} Crop_Preloaded;
 
 // Structure for storing farmer profiles
 typedef struct farmerInfoTag {
