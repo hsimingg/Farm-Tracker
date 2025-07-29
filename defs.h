@@ -88,15 +88,16 @@ void recommendPractices();
 // System Functions
 int saveFarmerdata(Farmer *user, int *size);
 int saveCropData(cropRecord *crop, int *size);
-
-void encryptStr(String50 str, int key);
-void decryptStr(String50 str, int key);
 void encryptUsers(Farmer *user, int *size, int key);
 void decryptUsers(Farmer *user, int *size, int key);
 
+//Computational
+int computeGrowthCycle (CropRecord *userData, int idx);
 
 // Utility
 void getValidateMenu(int *variable, int min, int max);
-void updateCropRecord();
+void encryptStr(String50 str, int key);
+void decryptStr(String50 str, int key);
+
 
 #endif // DEFS_H
