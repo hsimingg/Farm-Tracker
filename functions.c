@@ -308,14 +308,7 @@ void addCropRecord(CropRecord *crop, int *size)
 */
 void displayCropRecord(cropRecord *crop, int *size)
 {
-    String50 key;
-    int i, found;
-
-    printf("Enter Crop Name to display: ");
-    scanf("%s", key);
-
-    found = 0;
-
+    
     for (i = 0; i < *size; i++)
     {
         if (strcmp(key, crop[i].cropName) == 0)
@@ -334,13 +327,7 @@ void displayCropRecord(cropRecord *crop, int *size)
         }
     }
 
-    if (found == 0)
-    {
-        printf("No records found for crop: %s\n", key);
-    }
-	
 }
-
 /*
     This function deletes a crop record by index (1-based).
 
@@ -547,14 +534,14 @@ int loadCropData(crop_Preloaded *pre, int *size)
 {
     FILE *txt;
     char fileBase[MAX_LENGTH];
-    char txtName[MAX_LENGTH];
+    char txtName[256];
     int i, flag;
 
     /* initialize */
     i = 0;
     flag = 0;
 
-    printf("Input file name. No extension (.txt): ");
+    printf("Input file name. No extension (-file.txt): ");
     scanf("%s", fileBase);
 
     /* build "<base>.txt" */
@@ -573,12 +560,12 @@ int loadCropData(crop_Preloaded *pre, int *size)
         while (i < MAX_CROP &&
                     fscanf(txt, "%s", pre[i].cropName) == 1 &&
                     fscanf(txt, "%s", pre[i].soilRecommend) == 1 &&
-                    fscanf(txt, "%s", pre[i].monthsRecommend) == 1 &&
-                    fscanf(txt, "%s", &pre[i].minWaterRecommend) == 1 &&
-                    fscanf(txt, "%s", &pre[i].maxWaterRecommend) == 1 &&
-                    fscanf(txt, "%s", &pre[i].fertilizerRecommend) == 1 &&
-                    fscanf(txt, "%s", &pre[i].expectedDuration) == 1 &&
-                    fscanf(txt, "%s", &pre[i].expectedYield) == 1)
+                    fscanf(txt, "%f", &pre[i].expectedYield) == 1 &&
+                    fscanf(txt, "%f", &pre[i].minWaterRecommend) == 1 &&
+                    fscanf(txt, "%f", &pre[i].maxWaterRecommend) == 1 &&
+                    fscanf(txt, "%f", &pre[i].fertilizerRecommend) == 1 &&
+                    fscanf(txt, "%f", &pre[i].expectedDuration) == 1 &&
+                    fscanf(txt, "%s", pre[i].monthsRecommend) == 1)
         {
             i++;
         }
@@ -591,6 +578,34 @@ int loadCropData(crop_Preloaded *pre, int *size)
     printf("%d record(s) loaded for preloaded crops.\n", *size);
 
     return flag;
+}
+
+
+/*
+	This function displays all preloaded data
+
+ 	@param *crop: pointer to the address of the array of crop_Preloaded
+
+*/  
+void displayPreLoad(crop_Preload *pre, int *size)
+{
+	
+	int i;
+	
+	while( i < *size)
+	{
+		printf("%s ", pre[i].cropName);
+        	printf("%s ", pre[i].soilRecommend);
+		printf("%.2f ", pre[i].expectedYield);
+		printf("%.2f ", pre[i].minWaterRecommend);
+	        printf("%.2f ", pre[i].maxWaterRecommend);
+	        printf("%.2f ", pre[i].fertilizerRecommend);
+	        printf("%.2f ", pre[i].expectedDuration);
+	        printf("%s\n", pre[i].monthsRecommend);
+		
+		i++;
+	}
+	
 }
 
 //! WATER REQUIREMENTS
