@@ -1,4 +1,4 @@
-cropName,soilType,avgYield,minReqWater,maxReqWater,fertilizerReq,plantingMonths
+cropName,soilType,avgYield,minReqWater,maxReqWater,fertilizerReq, expecteDuration,plantingMonths
 Palay,Flooded Clay/Loam,4.14,1200,1500,270.5,June-July or Nov-Dec
 Corn,Well-drained Sandy,3.28,500,800,290.04,Feb-March or June
 Banana,Moisted Deep Loam,19.98,1200,2200,200,Rainy Season
