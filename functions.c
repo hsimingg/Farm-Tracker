@@ -373,16 +373,16 @@ int deleteCropRecord(cropRecord *crop, int *size)
             }
 
             /* Clear last slot (optional) */
-            crop[*size - 1].cropName[0]   = '\0';
-            crop[*size - 1].areaused      = -1.0f;
+            crop[*size - 1].cropName[0] = '\0';
+            crop[*size - 1].areaused = -1.0f;
             crop[*size - 1].plantedMonth[0]= '\0';
-            crop[*size - 1].plantedDay    = -1.0f;
-            crop[*size - 1].plantedYear   = -1.0f;
-            crop[*size - 1].waterUsed     = -1.0f;
+            crop[*size - 1].plantedDay = -1.0f;
+            crop[*size - 1].plantedYear = -1.0f;
+            crop[*size - 1].waterUsed = -1.0f;
             crop[*size - 1].fertilizerUsed= -1.0f;
-            crop[*size - 1].soilUsed[0]   = '\0';
+            crop[*size - 1].soilUsed[0] = '\0';
             crop[*size - 1].harvestDate[0]= '\0';
-            crop[*size - 1].yieldUsed     = -1.0f;
+            crop[*size - 1].yieldUsed = -1.0f;
 
             (*size) = (*size) - 1;
             printf("Record deleted.\n");
@@ -736,7 +736,7 @@ int saveFarmerdata(Farmer *user, int *size)
     @param *size : pointer to the address of cropCount
     @return flag : 1 on success, 0 on failure to open at least one file
 */
-int saveCropData(CropRecord *crops, int *size)
+int saveCropData(CropRecord *crop, int *size)
 {
       
     FILE *bin;
@@ -748,7 +748,7 @@ int saveCropData(CropRecord *crops, int *size)
 	char txtName[MAX_LENGTH];
 	char fileName[MAX_LENGTH];
 	
-	printf("Input file name. No extension (-file.dat/-file.exe): ");
+	printf("Input file name. No extension (.dat/.exe): ");
 	scanf("%s", fileName);
 	
 	strcpy(binName, fileName);
@@ -775,28 +775,28 @@ int saveCropData(CropRecord *crops, int *size)
 		for(i = 0; i < *size; i++)
 		{	
             //TEXT OUTPUT (human-readable)
-            fprintf(txt, "Crop name: %s\n", crops[i].cropName);
-            fprintf(txt, "Area used (ha): %.2f\n", crops[i].areaused);
-            fprintf(txt, "Planted month: %s\n", crops[i].plantedMonth);
-            fprintf(txt, "Planted day: %.0f\n", crops[i].plantedDay);
-            fprintf(txt, "Planted year: %.0f\n", crops[i].plantedYear);
-            fprintf(txt, "Water used (m^3): %.2f\n", crops[i].waterUsed);
-            fprintf(txt, "Fertilizer used (kg): %.2f\n", crops[i].fertilizerUsed);
-            fprintf(txt, "Soil used: %s\n", crops[i].soilUsed);
-            fprintf(txt, "Harvest date: %s\n", crops[i].harvestDate);
-            fprintf(txt, "Yield (tons): %.2f\n\n", crops[i].yieldUsed);
+            fprintf(txt, "Crop name: %s\n", crop[i].cropName);
+            fprintf(txt, "Area used (ha): %.2f\n", crop[i].areaused);
+            fprintf(txt, "Planted month: %s\n", crop[i].plantedMonth);
+            fprintf(txt, "Planted day: %.0f\n", crop[i].plantedDay);
+            fprintf(txt, "Planted year: %.0f\n", crop[i].plantedYear);
+            fprintf(txt, "Water used (m^3): %.2f\n", crop[i].waterUsed);
+            fprintf(txt, "Fertilizer used (kg): %.2f\n", crop[i].fertilizerUsed);
+            fprintf(txt, "Soil used: %s\n", crop[i].soilUsed);
+            fprintf(txt, "Harvest date: %s\n", crop[i].harvestDate);
+            fprintf(txt, "Yield (tons): %.2f\n\n", crop[i].yieldUsed);
 
             //BINARY OUTPUT (fixed layout matches struct order)
-            fwrite(crops[i].cropName,     sizeof(String50), 1, bin);
-            fwrite(&crops[i].areaused,    sizeof(float),    1, bin);
-            fwrite(crops[i].plantedMonth, sizeof(String50), 1, bin);
-            fwrite(&crops[i].plantedDay,  sizeof(float),    1, bin);
-            fwrite(&crops[i].plantedYear, sizeof(float),    1, bin);
-            fwrite(&crops[i].waterUsed,   sizeof(float),    1, bin);
-            fwrite(&crops[i].fertilizerUsed, sizeof(float), 1, bin);
-            fwrite(crops[i].soilUsed,     sizeof(String50), 1, bin);
-            fwrite(crops[i].harvestDate,  sizeof(String50), 1, bin);
-            fwrite(&crops[i].yieldUsed,   sizeof(float),    1, bin);
+            fwrite(crop[i].cropName, sizeof(String50), 1, bin);
+            fwrite(&crop[i].areaused, sizeof(float), 1, bin);
+            fwrite(crop[i].plantedMonth, sizeof(String50), 1, bin);
+            fwrite(&crop[i].plantedDay, sizeof(float), 1, bin);
+            fwrite(&crop[i].plantedYear, sizeof(float), 1, bin);
+            fwrite(&crop[i].waterUsed, sizeof(float), 1, bin);
+            fwrite(&crop[i].fertilizerUsed, sizeof(float), 1, bin);
+            fwrite(crop[i].soilUsed, sizeof(String50), 1, bin);
+            fwrite(crop[i].harvestDate, sizeof(String50), 1, bin);
+            fwrite(&crop[i].yieldUsed, sizeof(float), 1, bin);
 		}
 		
     	flag = 1;
@@ -913,47 +913,78 @@ void decrpytUsers(Farmer *user, int *size, int key)
     
 }
 
-
-// ? OPTIONAL
-
-void updateCropRecord()
+//computation functions
+int computeGrowthCycle (CropRecord *userData, int idx)
 {
+    int totaldays = -1;
+    int i;
+    int num_pMonth = -1;
+    int num_hMonth = -1;
+    int monthNum = 12;
+    char months[][monthNum] = {"January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December"};
+    int daysMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+    if (strcmp(userData[idx].plantedMonth, "-1") != 0 && 
+        strcmp(userData[idx].harvestMonth, "-1") != 0)
+    {
+        
+        for (i = 0; i < monthNum; i++)
+        {
+            if (strcmp(userData[idx].plantedMonth, months[i]) == 0)
+                num_pMonth = i;
+            if (strcmp(userData[idx].harvestMonth, months[i]) == 0)
+                num_hMonth = i;
+        }
+        
+        if (num_pMonth != -1 && num_hMonth != -1)
+        {
+
+            totaldays = 0;
+
+            if (userData[idx].plantedYear == userData[idx].harvestYear) //same yr
+            {
+                if (num_pMonth == num_hMonth) //same month
+                {
+                    totaldays = userData[idx].harvestDay - userData[idx].plantedDay;
+                }
+                else //same yr diff months
+                {
+                    //remaing days in pmonth
+                    totaldays = daysMonth[num_pMonth] - userData[idx].plantedDay;
+                    
+                    for (i = num_pMonth + 1; i < num_hMonth; i++)
+                    {
+                        totaldays += daysMonth[i];
+                    }
+                    
+                    totaldays += userData[idx].harvestDay;
+                }
+            }
+            else //diff yr
+            {
+                totaldays = daysMonth[num_pMonth] - userData[idx].plantedDay; 
+                
+                for (i = num_pMonth + 1; i < monthNum; i++)
+                {
+                    totaldays += daysMonth[i];
+                }
+                
+                for (i = userData[idx].plantedYear + 1; i < userData[idx].harvestYear; i++)
+                {
+                    totaldays += 365;
+                }
+                
+                for (i = 0; i < num_hMonth; i++)
+                {
+                    totaldays += daysMonth[i];
+                }
+                
+                totaldays += userData[idx].harvestDay;
+            }
+        }
+        
+    }
+
+    return totaldays;
 }
-
-void recommendPractices()
-{
-
-}
-
-void track_ResourceUsage()
-{
-
-}
-
-/*
-fertilizer, seeds, etc
-*/
-void addInventoryItem()
-{
-
-}
-
-void updateInventoryItem()
-{
-
-}
-
-void displayInventory()
-{
-
-}
-
-void deleteInventoryItem()
-{
-
-}
-
-*/
-
-*/
