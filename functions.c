@@ -23,7 +23,7 @@ void addFarmerProfile(Farmer *user, int *size)
     }
 
     printf("Input ID Number: ");
-    scanf("%d", &user[*size].idNum);
+    scanf("%s", user[*size].idNum);
     printf("Input First Name: ");
     scanf("%s", user[*size].fName);
     printf("Input Last Name: ");
@@ -79,11 +79,11 @@ int farmerLogin(Farmer *user, int *size, Farmer *currentUser)
     @param *user: pointer to the address of the structure userList
     @param *size: pointer to the address of userCount
 */
-void forgotPassword(Farmer *user)
+void forgotPassword(Farmer *user, int *size)
 {
-	int i, match = -1, nIndex;
+	int i, match = -1;
 	Farmer temp;
-	String50 Name;
+
 	
     printf("Enter username: ");
     scanf("%s", temp.username);
@@ -154,11 +154,11 @@ int deleteFarmerProfile(Farmer *user, int *size)
 	        }
 	
 	        // Clear last contact (optional)
-	        user[*size - 1].fName = '\0';
-	        user[*size - 1].lName = '\0';
-	        user[*size - 1].idNum = 0;
-	        user[*size - 1].password = '\0';
-	        user[*size - 1].username = '\0';
+	        user[*size - 1].fName[i] = '\0';
+	        user[*size - 1].lName[i] = '\0';
+	        user[*size - 1].idNum[i] = '\0';
+	        user[*size - 1].password[i] = '\0';
+	        user[*size - 1].username[i] = '\0';
 	        
 	
 	        (*size)--;
@@ -231,12 +231,12 @@ int loadFarmerData(Farmer *user, int *size)
 	
     if (txt == NULL)
     {
-    	printf("Failed to open text file.")
+    	printf("Failed to open text file.");
 	}
 	else
 	{
 		while(i < *size && 
-		fscanf(txt, "%d", &user[i].idNum) == 1 &&
+		fscanf(txt, "%s", user[i].idNum) == 1 &&
 		fscanf(txt, "%s", user[i].fName) == 1 &&
 		fscanf(txt, "%s", user[i].lName) == 1 &&
 		fscanf(txt, "%s", user[i].password) == 1 &&
@@ -273,10 +273,10 @@ void displayFarmerProfile(Farmer *user, int *size, Farmer *currentUser)
     
     for(i = 0; i < *size; i++)
     {
-    	if(strcmp(currentUser.username, user[i].username) == 0)
+    	if(strcmp(currentUser->username, user[i].username) == 0)
     	{
     		printf("Farmer Profile\n");
-    		printf("ID Number: %d\n", user[i].idNum);
+    		printf("ID Number: %s\n", user[i].idNum);
     		printf("First Name: %s\n", user[i].fName);
     		printf("Family Name: %s\n", user[i].lName);
     		printf("Username: %s\n", user[i].username);
@@ -295,7 +295,7 @@ void displayFarmerProfile(Farmer *user, int *size, Farmer *currentUser)
     @param *crops: pointer to the address of the array cropList
     @param *size : pointer to the address of cropCount
 */
-void addCropRecord(CropRecord *crop, int *size)
+void addCropRecord(cropRecord *crop, int *size)
 {
 
 	int flag;
@@ -350,6 +350,12 @@ void addCropRecord(CropRecord *crop, int *size)
 void displayCropRecord(cropRecord *crop, int *size)
 {
     
+    int i;
+    String50 key;
+    
+    printf("Enter crop name: ");
+    scanf("%s", key);
+    
     for (i = 0; i < *size; i++)
     {
         if (strcmp(key, crop[i].cropName) == 0)
@@ -364,7 +370,7 @@ void displayCropRecord(cropRecord *crop, int *size)
             printf("Soil used: %s\n", crop[i].soilUsed);
             printf("Harvest date: %s\n", crop[i].harvestDate);
             printf("Yield (tons): %.2f\n\n", crop[i].yieldUsed);
-            found = 1;
+
         }
     }
 
@@ -438,10 +444,10 @@ int deleteCropRecord(cropRecord *crop, int *size)
     @param *size          : pointer to the address of cropCount
     @param byNameElseYield: 1 to sort by name, 0 to sort by yield desc
 */
-void sortCropRecord(CropRecord *crop, int *size, int byNameElseYield)
+void sortCropRecord(cropRecord *crop, int *size, int byNameElseYield)
 {
 	
-	CropRecord temp;
+	cropRecord temp;
 	int i, j;
 	
     if (*size <= 1)
@@ -469,10 +475,10 @@ void sortCropRecord(CropRecord *crop, int *size, int byNameElseYield)
         {
             for (j = 0; j < *size - 1 - i; j++)
             {
-                if (crops[j].avgYield < crops[j + 1].avgYield)
+                if (crop[j].yieldUsed < crop[j + 1].yieldUsed)
                 {
                     temp = crop[j];
-                    crop[j] = crops[j + 1];
+                    crop[j] = crop[j + 1];
                     crop[j + 1] = temp;
                 }
             }
@@ -627,7 +633,7 @@ int loadCropData(crop_Preloaded *pre, int *size)
  	@param *crop: pointer to the address of the array of crop_Preloaded
 	@param *size: pointer to the address of the preloaded cropCount
 */  
-void displayPreLoad(crop_Preload *pre, int *size)
+void displayPreLoad(crop_Preloaded *pre, int *size)
 {
 	
 	int i;
@@ -635,78 +641,78 @@ void displayPreLoad(crop_Preload *pre, int *size)
 	while( i < *size)
 	{
 		printf("%s ", pre[i].cropName);
-        	printf("%s ", pre[i].soilRecommend);
+        printf("%s ", pre[i].soilRecommend);
 		printf("%.2f ", pre[i].expectedYield);
 		printf("%.2f ", pre[i].minWaterRecommend);
-	        printf("%.2f ", pre[i].maxWaterRecommend);
-	        printf("%.2f ", pre[i].fertilizerRecommend);
-	        printf("%.2f ", pre[i].expectedDuration);
-	        printf("%s\n", pre[i].monthsRecommend);
+	    printf("%.2f ", pre[i].maxWaterRecommend);
+	    printf("%.2f ", pre[i].fertilizerRecommend);
+	    printf("%.2f ", pre[i].expectedDuration);
+	    printf("%s\n", pre[i].monthsRecommend);
 		
 		i++;
 	}
 	
 }
-
-//! WATER REQUIREMENTS
-
-/*
-average water use*/
-int computeWaterUsage()
-{
-
-}
-
-void computeAverageWaterUse()
-{
-
-}
-
-/*
-water requirements and water quality
- */
-void inputWaterData()
-{
-
-}
-
-
-//! YIELD PLANTING
-
-/*
-expected yield of optimal planting schedule
-average yield per crop
-*/
-int computeExpectedYield()
-{
-
-}
-
-void computeAverageYield()
-{
-
-}
-
-//! RESOURCES
-
-void track_IrrigationUsage()
-{
-
-}
-
-//! WEATHER
-
-/*
-weather and climate information
-*/
-void weatherInformation()
-{
-
-}
-
-/*
-
-*/
+//
+////! WATER REQUIREMENTS
+//
+///*
+//average water use*/
+//int computeWaterUsage()
+//{
+//
+//}
+//
+//void computeAverageWaterUse()
+//{
+//
+//}
+//
+///*
+//water requirements and water quality
+// */
+//void inputWaterData()
+//{
+//
+//}
+//
+//
+////! YIELD PLANTING
+//
+///*
+//expected yield of optimal planting schedule
+//average yield per crop
+//*/
+//int computeExpectedYield()
+//{
+//
+//}
+//
+//void computeAverageYield()
+//{
+//
+//}
+//
+////! RESOURCES
+//
+//void track_IrrigationUsage()
+//{
+//
+//}
+//
+////! WEATHER
+//
+///*
+//weather and climate information
+//*/
+//void weatherInformation()
+//{
+//
+//}
+//
+///*
+//
+//*/
 
 
 
@@ -759,13 +765,13 @@ int saveFarmerdata(Farmer *user, int *size)
 	{
 		for(i = 0; i < *size; i++)
 		{	
-			fprintf(txt, "%d\n", user[i].idNum);
+			fprintf(txt, "%s\n", user[i].idNum);
 			fprintf(txt, "%s\n", user[i].fName);
 			fprintf(txt, "%s\n", user[i].lName);
 			fprintf(txt, "%s\n", user[i].password);
 			fprintf(txt, "%s\n\n", user[i].username);
 			
-			fwrite(user[i].idNum, sizeof(int), 1, bin);
+			fwrite(user[i].idNum, sizeof(String50), 1, bin);
 			fwrite(user[i].fName, sizeof(String50), 1, bin);
 			fwrite(user[i].lName, sizeof(String50), 1, bin);
 			fwrite(user[i].password, sizeof(String50), 1, bin);
@@ -791,7 +797,7 @@ int saveFarmerdata(Farmer *user, int *size)
     @param *size : pointer to the address of cropCount
     @return flag : 1 on success, 0 on failure to open at least one file
 */
-int saveCropData(CropRecord *crop, int *size)
+int saveCropData(cropRecord *crop, int *size)
 {
       
     FILE *bin;
@@ -863,32 +869,32 @@ int saveCropData(CropRecord *crop, int *size)
 	return flag;
 }
 
-void exportReporttoFile()
-{
-
-}
-
-
-//? validate / test
-
-void runTestDataSimulation()
-{
-
-}
+//void exportReporttoFile()
+//{
+//
+//}
+//
+//
+////? validate / test
+//
+//void runTestDataSimulation()
+//{
+//
+//}
 
 void getValidateMenu(char *variable, char min, char max)
 {
 	do
+	{
+		printf("Enter: ");
+		scanf(" %c", variable);
+
+		if (*variable < min || *variable > max)
 		{
-			printf("Enter: ");
-			scanf(" %c", variable);
+			printf("Try Again. Only Enter %c-%c.\n", min, max);
+		}
 
-			if (*variable < min || *variable > max)
-			{
-				printf("Try Again. Only Enter %c-%c.\n", min, max);
-			}
-
-		} while(*variable < min || *variable > max);
+	} while(*variable < min || *variable > max);
 }
 
 
@@ -969,6 +975,25 @@ void decrpytUsers(Farmer *user, int *size, int key)
 }
 
 //computation functions
+
+/*
+    This function computes the total number of days between the planted date
+    and the harvest date for a given crop record. It handles cases where the
+    planting and harvest occur in the same month/year or across multiple months/years.
+
+    Assumptions / Notes:
+    - Months are matched by exact string comparison against a fixed month list.
+    - Day counts per month are fixed (no leap-year adjustment for February).
+    - If either plantedMonth or harvestMonth is "-1", the function leaves
+      totaldays as -1 (meaning N/A or insufficient data).
+    - If month names are not found in the month list, totaldays remains -1.
+    - If planted and harvest are the same month/year, result is (harvestDay - plantedDay).
+
+    @param *userData : pointer to the array of CropRecord (user-entered crop data)
+    @param  idx      : index into userData for the record to evaluate
+    @return totaldays: total number of days from planting to harvest
+                       (or -1 if months are invalid / data N/A)
+*/
 int computeGrowthCycle (CropRecord *userData, int idx)
 {
     int totaldays = -1;
