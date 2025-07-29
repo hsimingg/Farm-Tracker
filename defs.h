@@ -63,7 +63,7 @@ int deleteCropRecord(cropRecord *crop, int *size);
 void sortCropRecord(cropRecord *crop, int *size, int byNameElseYield);
 int searchCropRecord(cropRecord *crop, int *size);
 int loadCropData(crop_Preloaded *pre, int *size);
-
+void displayPreLoad(crop_Preload *pre, int *size);
 // Water Requirement Functions
 int computeWaterUsage();
 void computeAverageWaterUse();
